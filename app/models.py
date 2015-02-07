@@ -12,7 +12,11 @@ class Event(models.Model):
 	name = models.CharField(max_length = 30)
 	admin = models.CharField(max_length = 30)
 	total = models.DecimalField(max_digits = 6, decimal_places = 2)
+	desc = models.TextField(null=True)
 	goal = models.IntegerField()
+
+	def __unicode__(self):
+		return self.hashString+" "+self.name
 
 class Contributor(models.Model):
 	event = models.ForeignKey(Event)

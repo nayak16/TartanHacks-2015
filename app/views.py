@@ -31,10 +31,12 @@ def new_event(request):
 	return render(request,'app/create_event.html')
 
 def create_event(request):
+	print " created------"
 	context = {}
 	error = []
 	name = ""
 	admin = ""
+	desc = ""
 	goal = 0
 	total = 0
 	if 'name' in request.POST:
@@ -43,31 +45,35 @@ def create_event(request):
 		admin = request.POST['admin']
 	if 'email' in request.POST:
 		email = request.POST['email']
+	if 'desc' in request.POST:
+		desc = request.POST['desc']
 	hashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	ahashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	event = Event(hashString=hashS,adminHashString=ahashS,name=name,
-										admin=admin,total=total,goal=goal)
+										admin=admin,total=total,goal=goal, desc=desc)
 	event.save()
-
+	print event
 	# Send email to admin
 	try:
 		server = smtplib.SMTP('smtp.gmail.com', 587)
 		server.starttls()
 		server.login("moneyplscmu@gmail.com", "gucciswerve")
-		message = "http://moneypls.azurewebsites.net/admin/"+ahashS
+		msg = "Event Page: http://moneypls.azurewebsites.net/event/"+hashS+"\n\nAdmin Page: http://moneypls.azurewebsites.net/admin/"+ahashS
+		subject = "URL for event "+name
+		message = 'Subject: %s\n\n%s' % (subject, msg)
 		server.sendmail("moneyplscmu@gmail.com", email, message)
 		server.quit()
 	except:
 		error.append("Oops something went wrong")
 
 
-	context['confirm'] = "Everything went well"
+	context['confirm'] = "Success! Check your email for a link to the admin page for the event"
 	context['errors'] = error
-	return render(request,TODO_CHANGE_THIS, context)
+	return render(request,'app/create_event.html', context)
 
 
 def display_event(request, event_id):
-	print "------------"
+	
 	try:
 		event = Event.objects.get(hashString = event_id)
 	except:
@@ -76,10 +82,17 @@ def display_event(request, event_id):
 	context['name'] = event.name
 	context['admin'] = event.admin
 	context['total'] = event.total
+	context['desc'] = event.desc
+
+	print event
+	if event.goal > 0:
+		context['goal'] = goal
 	people = []
-	for c in context.contributor_set.all():
-		people.append({'name':c.name,'amount':c.money})
-	context['people'] = people
+	if len(event.contributor_set.all()) > 0:
+		for c in event.contributor_set.all():
+			people.append({'name':c.name,'amount':c.money})
+		context['people'] = people
+
 
 	return render(request, TODO_CHANGE_THIS, context)
 
