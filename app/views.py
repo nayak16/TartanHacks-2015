@@ -65,7 +65,7 @@ def create_event(request):
 		server.starttls()
 		server.login("moneyplscmu@gmail.com", "gucciswerve")
 		msg = "Event Page: http://moneypls.azurewebsites.net/event/"+hashS+"\n\nAdmin Page: http://moneypls.azurewebsites.net/admin/"+ahashS
-		subject = "URL for event "+name
+		subject = "Event Confirmation for "+name
 		message = 'Subject: %s\n\n%s' % (subject, msg)
 		server.sendmail("moneyplscmu@gmail.com", email, message)
 		server.quit()
