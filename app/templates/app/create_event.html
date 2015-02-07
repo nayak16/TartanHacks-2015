@@ -14,10 +14,11 @@
   	<div class="main">
       <br>
   		<div class="title_text">Create a new event</div>
-      <form action="">
-        <div class="input_fieldname">Name of event*</div><input type="text" name="event_name" size="50" required><br>
+      <form action="/create_event" method="POST">
+        {% csrf_token %} 
+        <div class="input_fieldname">Name of event*</div><input type="text" name="name" size="50" required><br>
         <div class="error_msg" id="error_event_name"></div>
-        <div class="input_fieldname">Venmo ID*</div><input type="text" name="venmo_id" size="50" required><br>
+        <div class="input_fieldname">Venmo ID*</div><input type="text" name="admin" size="50" required><br>
         <div class="error_msg" id="error_venmo_id"></div>
         <div class="input_fieldname">Email Address*</div><input type="email" name="email" size="50" required><br>
         <div class="error_msg" id="error_venmo_id"></div>
@@ -31,6 +32,9 @@
         <div class="error_msg" id="error_desc"></div>
         <div class="submit_form"><input type="submit" value="Create"></input></div>
       </form>
+      {% if confirm %}
+      <h1 id="success">{{confirm}}</h1>
+      {% endif %}
       <div class="whitespace"></div>
   	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
