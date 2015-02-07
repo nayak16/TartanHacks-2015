@@ -58,7 +58,6 @@ def log_venmo(request):
 	venmo.connect()
 	venmo.request('POST', '/v1/payments', 'access_token=%s&user_id=%s&amount=%snote=moneyPLS' % (tok,user_id, amount))
 	print venmo.getresponse().read()
-	print venmo.getresponse().reason()
 	venmo.close()
 
 	
