@@ -13,6 +13,7 @@ import random
 import sys
 import smtplib
 import httplib
+import subprocess
 
 def home(request):
     """Renders the home page."""
@@ -55,10 +56,10 @@ def log_venmo(request):
 	print user_id
 
 
-	subprocess.call(['curl', 'https://api.venmo.com/v1/payments', '-d', "access_token="+tok,'-d',"user_id="+user_id,"-d","amount="+amount,"-d","note=moneypls payment"])
+	subprocess.call(['curl', 'https://api.venmo.com/v1/payments', '-d', "access_token="+tok,'-d',"phone=1"+user_id,"-d","amount="+amount,"-d","note=moneypls payment"])
 	
-	event.total+=int(amount)
-	event.contributor_set.create(name=payer, money=int(amount))
+	event.total= str(float(event.total) + float(amount))
+	event.contributor_set.create(name=payer, money=float(amount))
 
 
 	return render(request, 'app/index.html')
@@ -125,7 +126,12 @@ def admin_event(request, event_id):
 		context['goal'] = event.goal
 	if event.date != None:
 		context['date'] = event.date
-		
+
+	people = []
+	if len(event.contributor_set.all()) > 0:
+		for c in event.contributor_set.all():
+			people.append({'amount':c.money,'name':c.name})
+		context['people'] = people
 	return render(request, 'app/admin.html', context)
 
 def edit_event(request):
@@ -164,10 +170,7 @@ def redirect_event(request):
 	if event.goal > 0:
 		context['goal'] = event.goal
 	people = []
-	if len(event.contributor_set.all()) > 0:
-		for c in event.contributor_set.all():
-			people.append({'name':c.name,'amount':c.money})
-		context['people'] = people
+	
 
 	print "========================"
 	print context
