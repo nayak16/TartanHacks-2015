@@ -6,7 +6,7 @@ function resizeContent() {
 }
 
 function setRandomBackgroundImage(){
-	var images = 5;
+	var images = 8;
 	var number = Math.floor(Math.random(1) * images) + 1;
 	var link = "url(/static/app/content/frontpage/image" + number + ".jpg)"; 
 	$( '#top' ).css("background-image",link);
