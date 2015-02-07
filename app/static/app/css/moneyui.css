@@ -1,3 +1,49 @@
 html, body {
 	margin: 0px; padding: 0px; border: 0px;
+	font-family: 'Open-Sans' sans-serif;
+	height:100%;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.banner{
+	height:900px;
+	background-color: rgb(34,34,34);
+}
+.banner_title{
+	font-size: 64px;
+	font-weight:700;
+	font-family: 'Open-Sans', sans-serif;
+}
+
+.banner_overlay{
+	background-color:#ECF0F1;
+	padding:20px;
+	position:absolute;
+	top: 200px;
+}
+
+.see_more{
+	height:16px;
+	padding:16px;
+	background-color: #68C3A3;
+	font-size:16px;
+	color:white;
+}
+
+.main{
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #ECF0F1;
+	width:960px;
+	height:2000px;
+}
+
+.title_text {
+	font-size: 64px;
+	font-weight:700;
+	font-style:italic;
+	font-family: 'Merriweather', serif;
 }
