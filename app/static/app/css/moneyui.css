@@ -3,8 +3,6 @@ input,textarea {
 }
 
 input[type=submit] {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
   border-radius: 0px;
   font-size: 16px;
   font-family: 'Open Sans Condensed' sans-serif;
