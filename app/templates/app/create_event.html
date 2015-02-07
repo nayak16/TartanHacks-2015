@@ -5,11 +5,10 @@
     <link href="/static/app/css/moneyui.css" rel="stylesheet">
   </head>
   <body>
-  	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700' rel='stylesheet' type='text/css'>
+  	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
   	<link rel="stylesheet" href="/static/app/css/font-awesome.min.css">
     <div class="nav">
-      <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.svg" width="64" height="64"></a>
+      <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.png"></a>
     </div>
   	<div class="main">
       <br>
@@ -33,10 +32,16 @@
         <div class="submit_form"><input type="submit" value="Create"></input></div>
       </form>
       {% if confirm %}
-      <h1 id="success">{{confirm}}</h1>
+      <div id="success">{{confirm}}</div>
       {% endif %}
       <div class="whitespace"></div>
   	</div>
+    <div class="footer">
+      <center>
+        A TartanHacks 2015 Project by Christopher Wei, Aatish Nayak, Justin Liu, and Ariel Rao<br>
+        Powered by Venmo - Open Source<br>
+      </center>
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   </body>
 </html>

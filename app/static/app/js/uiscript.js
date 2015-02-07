@@ -5,8 +5,16 @@ function resizeContent() {
     $('body .banner_overlay').css("top",($height/4));
 }
 
+function setRandomBackgroundImage(){
+	var images = 5;
+	var number = Math.floor(Math.random(1) * images) + 1;
+	var link = "url(/static/app/content/frontpage/image" + number + ".jpg)"; 
+	$( '#top' ).css("background-image",link);
+}
+
 $(document).ready(function(){
     resizeContent();
+    setRandomBackgroundImage();
 
     $(window).resize(function() {
         resizeContent();

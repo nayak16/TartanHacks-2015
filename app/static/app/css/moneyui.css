@@ -20,20 +20,28 @@ a:link {
 	padding:12px;
 }
 
+#success{
+	clear:both;
+	color:#68C3A3;
+	font-size:12px;
+	font-weight:300;
+}
+
 .nav{
-	padding:12px;
+	padding:24px;
 	background-color: rgb(34,34,34);
 }
 
 .banner{
 	height:900px;
+	background-repeat:no-repeat;
+    background-size: cover;
 	background-color: rgb(34,34,34);
 }
 .banner_title{
 	display:inline-block;
 	font-size: 48px;
 	font-weight:700;
-	font-family: 'Open Sans Condensed', sans-serif;
 	background-color:#ECF0F1;
 	padding:24px;
 }
@@ -47,7 +55,7 @@ a:link {
     margin-right:auto;
 	top: 200px;
 }
-#get_started{
+.green_button{
 	margin-top:12px;
 	font-size: 16px;
 	font-weight: 600;
@@ -86,7 +94,6 @@ a:link {
 }
 
 .title_text {
-	font-family: 'Roboto Slab', serif;
 	margin-top: 32px;
 	margin-bottom:16px;
 	font-size: 32px;
@@ -99,7 +106,6 @@ a:link {
 
 .input_fieldname{
 	display:inline-block;
-	font-family: 'Open Sans Condensed', sans-serif;
 	font-weight:300;
 	font-size:18px;
 	margin-bottom:36px;
@@ -110,14 +116,21 @@ a:link {
 	color: grey;
 }
 .whitespace{
-	height:800px;
+	height:200px;
 }
 .submit_form{
 	float:right;
 	margin-right:260px;
 }
 
-#big_text{
+.big_text{
 	font-size: 36px;
 	font-weight:300;
+}
+
+.footer{
+	color:white;
+	height:300px;
+	padding:20px;
+	background-color: rgb(42,42,42);
 }
