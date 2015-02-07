@@ -61,7 +61,7 @@ def create_event(request):
 		msg = "Event Page: http://moneypls.azurewebsites.net/event/"+hashS+"\n\nAdmin Page: http://moneypls.azurewebsites.net/admin/"+ahashS
 		subject = "URL for event "+name
 		message = 'Subject: %s\n\n%s' % (subject, msg)
-		#server.sendmail("moneyplscmu@gmail.com", email, message)
+		server.sendmail("moneyplscmu@gmail.com", email, message)
 		server.quit()
 	except:
 		error.append("Oops something went wrong")
