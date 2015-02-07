@@ -94,7 +94,7 @@ def display_event(request, event_id):
 		context['people'] = people
 
 
-	return render(request, TODO_CHANGE_THIS, context)
+	return render(request, "app/event.html", context)
 
 def contact(request):
     """Renders the contact page."""
