@@ -49,8 +49,8 @@
         <div class="error_msg" id="error_desc"></div><br>
         <div class="submit_form"><input type="submit" value="UPDATE"></input></div>
       </form>
-    <div class="input_fieldname">Contributers</div>
-    <ul id="Contributer List">
+    <div class="title_text">Contributers</div>
+    <ul id="contr_list">
       {% if people %}
       {% for person in people %}
          <li> {{person.name}} contributed ${{person.amount}}</li>
