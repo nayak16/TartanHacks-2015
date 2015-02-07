@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MONEY PLS - Create Event</title>
+    <link href="/static/app/css/moneyui.css" rel="stylesheet">
+  </head>
+  <body>
+  	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,400,300,600,700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,300,100,700' rel='stylesheet' type='text/css'>
+  	<link rel="stylesheet" href="/static/app/css/font-awesome.min.css">
+    <div class="nav">
+      <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.svg" width="64" height="64"></a>
+    </div>
+  	<div class="main">
+      <br>
+  		<div class="title_text">Create a new event</div>
+      <form action="">
+        <div class="input_fieldname">Name of event*</div><input type="text" name="event_name" size="50" required><br>
+        <div class="error_msg" id="error_event_name"></div>
+        <div class="input_fieldname">Venmo ID*</div><input type="text" name="venmo_id" size="50" required><br>
+        <div class="error_msg" id="error_venmo_id"></div>
+        <div class="input_fieldname">Email Address*</div><input type="email" name="email" size="50" required><br>
+        <div class="error_msg" id="error_venmo_id"></div>
+        <div class="input_fieldname">Recommended Amount</div><input type="text"  name="rec_amt" size="50"><br>
+        <div class="error_msg" id="error_rec_amount"></div>
+        <div class="input_fieldname">Goal</div><input type="text"  name="goal" size="50"><br>
+        <div class="error_msg" id="error_goal"></div>
+        <div class="input_fieldname">End date</div><input type="date"  name="end_date" size="50"><br>
+        <div class="error_msg" id="error_end_date"></div>
+        <div class="input_fieldname">Description</div><textarea name="desc" cols="50" rows="5" style="margin-top:2px;"></textarea><br>
+        <div class="error_msg" id="error_desc"></div>
+        <div class="submit_form"><input type="submit" value="Create"></input></div>
+      </form>
+      <div class="whitespace"></div>
+  	</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  </body>
+</html>
