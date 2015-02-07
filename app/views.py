@@ -54,16 +54,18 @@ def create_event(request):
 		server = smtplib.SMTP('smtp.gmail.com', 587)
 		server.starttls()
 		server.login("moneyplscmu@gmail.com", "gucciswerve")
-		message = "http://moneypls.azurewebsites.net/admin/"+ahashS
+		url = "http://moneypls.azurewebsites.net/admin/"+ahashS
+		subject = "URL for event "+name
+		message = 'Subject: %s\n\n%s' % (subject, url)
 		server.sendmail("moneyplscmu@gmail.com", email, message)
 		server.quit()
 	except:
 		error.append("Oops something went wrong")
 
 
-	context['confirm'] = "Everything went well"
+	context['confirm'] = "Success! Check your email for a link to the admin page for the event"
 	context['errors'] = error
-	return render(request,TODO_CHANGE_THIS, context)
+	return render(request,'app/create_event.html', context)
 
 
 def display_event(request, event_id):
@@ -76,10 +78,14 @@ def display_event(request, event_id):
 	context['name'] = event.name
 	context['admin'] = event.admin
 	context['total'] = event.total
+	if event.goal > 0:
+		context['goal'] = goal
 	people = []
-	for c in context.contributor_set.all():
-		people.append({'name':c.name,'amount':c.money})
-	context['people'] = people
+	if len(context.contributor_set.all()) > 0:
+		for c in context.contributor_set.all():
+			people.append({'name':c.name,'amount':c.money})
+		context['people'] = people
+
 
 	return render(request, TODO_CHANGE_THIS, context)
 
