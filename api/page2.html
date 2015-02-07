@@ -1,0 +1,42 @@
+<HTML>
+
+<head>
+<script src='https://platform.venmo.com/sdk.js'></script>
+<SCRIPT LANGUAGE="JavaScript">
+
+function MsgBox (textstring) {
+alert (textstring) }
+</SCRIPT>
+</head>
+</HEAD>
+
+
+<BODY>
+<!--ADMIN PAGE
+-->
+
+ <table id="createEvent">
+    <tr>
+        <td><label>Create Event</label></td>
+    <tr>
+        <td colspan="2"><input class="textBox" id="event" type="text" maxlength="30" required/></td>
+    </tr>
+    <tr>
+        <td><input type="button" class="loginButtons" value="Create" onclick="createEvent();"/>&nbsp&nbsp&nbsp
+</table>
+
+<script type="text/javascript">
+function createEvent()
+{
+var eventName = document.getElementById('event').value;
+alert(eventName);
+}
+</script>
+
+</BODY>
+</HTML>
+
+
+
+
+
