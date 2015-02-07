@@ -46,7 +46,15 @@
       Pay ASAP
       {% endif %}
   	  </div>
-      
+      {% if loggedin %}
+      <form action = "/log_venmo" method = "POST">
+        <input type = "hidden" name = "url" value = "https://api.venmo.com/v1/payments">
+        <input type = "hidden" name = "access_token" value = "" id="at">
+        Your Name: <input name = "payer" value = ""> <br>
+        Donation Amount: <input name = "amount" value = ""> <br>
+        <button>Donate</button>
+      </form>
+      {% endif %}
   	  <div class="whitespace"></div>
   	</div>
 	  <div class="footer">

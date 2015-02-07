@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^event_page.html', 'app.views.redirect'),
     url(r'^edit_event', 'app.views.edit_event'),
     url(r'^log_venmo', 'app.views.log_venmo'),
-
+    url(r'^redirect_event$', 'app.views.redirect_event'),
     url(r'^event/(?P<event_id>\w+)', 'app.views.display_event'),
     url(r'^admin/(?P<event_id>\w+)', 'app.views.admin_event'),
     url(r'^contact$', 'app.views.contact', name='contact'),

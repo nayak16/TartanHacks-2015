@@ -28,30 +28,34 @@ def home(request):
     )
 
 def new_event(request):
-
 	return render(request,'app/create_event.html')
 
 def redirect(request):
 	return render(request,'app/event_page.html')
 
+
+
 def log_venmo(request):
 	context = {}
 	url = request.POST['url']
-	event_id = request.POST['event_id']
 	tok = request.POST['access_token']	
-	user_id = request.POST['user_id']
 	amount = request.POST['amount']
 	payer = request.POST['payer']
 	
+	event_id = request.COOKIES.get('id')
+	try:
+		event = Event.objects.get(hashString = event_id)
+	except:
+		return render(request, 'app/404.html')
+
+	user_id = event.admin 
+
 	venmo = httplib.HTTPConnection(url, 80)
 	venmo.connect()
 	venmo.request('POST', '/', 'access_token=%s&user_id=%s&amount=%s' % (tok,user_id, amount))
 	venmo.close()
 
-	try:
-		event = Event.objects.get(hashString = event_id)
-	except:
-		return render(request, 'app/404.html')
+	
 	event.total+=int(amount)
 	event.contributor_set.create(name=payer, money=int(amount))
 
@@ -59,7 +63,6 @@ def log_venmo(request):
 	return render(request, 'app/index.html')
 
 def create_event(request):
-	print " created------"
 	context = {}
 	error = []
 	name = ""
@@ -135,6 +138,39 @@ def edit_event(request):
 	context = {}
 
 	return render(request, )
+
+def redirect_event(request):
+	print "----------------"
+	context = {}
+	event_id = request.COOKIES.get('id') 
+	context['loggedin'] = True
+	print event_id	
+	try:
+		event = Event.objects.get(hashString = event_id)
+	except:
+		return render(request, 'app/404.html')
+
+	context = {}
+	context['name'] = event.name
+	context['admin'] = event.admin
+	context['total'] = event.total
+	if event.date != None:
+		context['end_date'] = event.date
+	if event.desc != None:
+		context['desc'] = event.desc
+	context['payments'] = len(event.contributor_set.all())
+	print event
+	if event.goal > 0:
+		context['goal'] = event.goal
+	people = []
+	if len(event.contributor_set.all()) > 0:
+		for c in event.contributor_set.all():
+			people.append({'name':c.name,'amount':c.money})
+		context['people'] = people
+
+
+	return render(request, "app/event.html", context)
+
 
 def display_event(request, event_id):
 	
