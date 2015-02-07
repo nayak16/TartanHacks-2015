@@ -2,6 +2,23 @@ input,textarea {
 	padding:12px;
 }
 
+input[type=submit] {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0px;
+  font-size: 16px;
+  font-family: 'Open Sans Condensed' sans-serif;
+  font-weight: 600;
+  color: white;
+  font-size: 16px;
+  background: #26A65B;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border  : none;
+} input[type=submit]:hover {
+	background: #68C3A3;
+}
+
 html, body {
 	margin: 0px; padding: 0px; border: 0px;
 	font-family: 'Open Sans Condensed' sans-serif;
@@ -119,8 +136,10 @@ a:link {
 	height:200px;
 }
 .submit_form{
+
 	float:right;
-	margin-right:260px;
+	margin-right:252px;
+	margin-top: 12px;
 }
 
 .big_text{
