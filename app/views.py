@@ -27,7 +27,9 @@ def home(request):
     )
 
 def create_event(request):
-	errors = {}
+	print "fewfewewfew"
+	context = {}
+	error = []
 	name = ""
 	admin = ""
 	goal = 0
@@ -36,23 +38,30 @@ def create_event(request):
 		name = request.POST['name']
 	if 'admin' in request.POST:
 		admin = request.POST['admin']
-	if 'email' in request.POST['email']
+	if 'email' in request.POST:
 		email = request.POST['email']
 	hashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	ahashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	event = Event(hashString=hashS,adminHashString=ahashS,name=name,
 										admin=admin,total=total,goal=goal)
-	
-	# Send email to admin
-	server = smtplib.SMTP('smtp.gmail.com', 587)
-	server.starttls()
-	server.login("moneyplscmu@gmail.com", "gucciswerve")
-	message = "http://moneypls.azurewebsites.net/admin/"+ahashS
-	server.sendmail("moneyplscmu@gmail.com", email, message)
-
 	event.save()
 
 
+	# Send email to admin
+	try:
+		server = smtplib.SMTP('smtp.gmail.com', 587)
+		server.starttls()
+		server.login("moneyplscmu@gmail.com", "gucciswerve")
+		message = "http://moneypls.azurewebsites.net/admin/"+ahashS
+		server.sendmail("moneyplscmu@gmail.com", email, message)
+		server.quit()
+	except:
+		error.append("Oops something went wrong")
+
+
+	context['confirm'] = "Everything went well"
+	context['errors'] = error
+	return render(request,TODO_CHANGE_THIS, context)
 
 
 def contact(request):
