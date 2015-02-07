@@ -1,7 +1,12 @@
+input,textarea {
+	padding:12px;
+}
+
 html, body {
 	margin: 0px; padding: 0px; border: 0px;
 	font-family: 'Open-Sans' sans-serif;
 	height:100%;
+	background-color: #ECF0F1;
 }
 
 a:link {
@@ -13,6 +18,11 @@ a:link {
 	margin:12px;
 	display:inline-block;
 	padding:12px;
+}
+
+.nav{
+	padding:12px;
+	background-color: rgb(34,34,34);
 }
 
 .banner{
@@ -57,17 +67,39 @@ a:link {
 .main{
 	margin-left: auto;
 	margin-right: auto;
-	background-color: #ECF0F1;
+	background-color: white;
 	width:960px;
-	padding:0px 12px 0px 12px;
+	padding:0px 24px 0px 24px;
 }
 
 .title_text {
-	font-size: 24px;
-	font-weight:700;
-	font-style:italic;
-	font-family: 'Merriweather', serif;
+	font-family: 'Roboto Slab', serif;
+	margin-top: 32px;
+	margin-bottom:16px;
+	font-size: 32px;
+	font-weight:300;
+
 }
 .more_info{
 	height: 800px;
+}
+
+.input_fieldname{
+	display:inline-block;
+	font-family: 'Open-Sans', sans-serif;
+	font-weight:300;
+	font-size:18px;
+	margin-bottom:36px;
+	margin-left: 48px;
+	margin-right: 12px;
+	width:200px;
+	vertical-align:top;
+	color: grey;
+}
+.whitespace{
+	height:800px;
+}
+.submit_form{
+	float:right;
+	margin-right:260px;
 }
