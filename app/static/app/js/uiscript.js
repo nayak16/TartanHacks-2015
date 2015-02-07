@@ -1,6 +1,8 @@
 function resizeContent() {
-    $height = $(window).height()-48;
-    $('body .banner').height($height);
+    $height = $(window).height();
+    $('body .banner').height($height-48);
+    $('body .more_info').height($height);
+    $('body .banner_overlay').css("top",($height/4));
 }
 
 $(document).ready(function(){
@@ -21,5 +23,9 @@ $(document).ready(function(){
 	    }, 900, 'swing', function () {
 	        window.location.hash = target;
 	    });
+	});
+
+	$('#scroll_to').on('click',function(){
+		console.log("here");
 	});
 });
