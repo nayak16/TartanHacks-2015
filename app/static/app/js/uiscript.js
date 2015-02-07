@@ -24,8 +24,11 @@ $(document).ready(function(){
 	        window.location.hash = target;
 	    });
 	});
-
-	$('#scroll_to').on('click',function(){
-		console.log("here");
-	});
+	$('body').on({
+		'mousewheel': function(e) {
+    	if (e.target.id == 'el') return;
+    	e.preventDefault();
+    	e.stopPropagation();
+    }
+})
 });
