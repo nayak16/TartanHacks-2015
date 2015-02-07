@@ -26,6 +26,14 @@ a:link {
 	width:960px;
 	padding:0px 24px 0px 24px;
 }
+.title_text {
+	margin-top: 32px;
+	margin-bottom:16px;
+	font-size: 32px;
+	font-weight:300;
+
+}
+
 #event_header{
 	padding:24px 0px 24px 0px;
 }

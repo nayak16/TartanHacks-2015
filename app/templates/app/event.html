@@ -11,28 +11,41 @@
       <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.png"></a>
     </div>
   	<div class="main">
+    {% if admin %}
 	  <div id="event_header">
-	    An event by {{venmo_name}}
-	    <div id="event_title"> {{event_title}} </div>
+	    An event by {{admin}}
+	    <div id="event_title"> {{name}} </div>
 	  </div>
+    {% endif %}
       <div class="left_divider">
       	<img src="/static/app/content/foo.jpg" width="456px"></img>
-      	<p>{{description}} Lorem ipsum dolor sit amet, consectetur adipiscing elit. </p>
+        {% if desc %}
+        <p>{{desc}}</p>
+        {% else %}
+        <p>A MoneyPLS Venmo Event</p>
+        {% endif %}
       </div>
       <div class="right_divider">
-      	<div class="big_text">{{num_contributers}}</div> payments made
-      	<div class="big_text">${{total_raised}}</div> total raised out of ${{goal}}
-      	<div class="big_text">${{total_raised}}</div> total raised out of ${{goal}}
+      	<div class="big_text">{{payments}}</div> payments made
+
+      	<div class="big_text">${{total}}</div> total raised 
+        {% if goal %} out of ${{goal}}{% endif %} 
       	<br>
       	<a href="/new_event.html">
-			<div class="green_button">
-				PAY WITH VENMO
-			</div>
-		</a>
+			    <div class="green_button">
+				  PAY WITH VENMO
+			    </div>
+		    </a>
       </div>
+      
       <div id="event_footer">
+      {% if end_date %}
   		End date: {{end_date}}
+      {% else %}
+      Pay ASAP
+      {% endif %}
   	  </div>
+      
   	  <div class="whitespace"></div>
   	</div>
 	  <div class="footer">

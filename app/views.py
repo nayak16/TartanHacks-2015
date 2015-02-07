@@ -36,9 +36,11 @@ def create_event(request):
 	error = []
 	name = ""
 	admin = ""
-	desc = ""
+	desc = None
 	goal = 0
 	total = 0
+	end_date = None
+	email = None
 	if 'name' in request.POST:
 		name = request.POST['name']
 	if 'admin' in request.POST:
@@ -47,10 +49,14 @@ def create_event(request):
 		email = request.POST['email']
 	if 'desc' in request.POST:
 		desc = request.POST['desc']
+	if 'goal' in request.POST:
+		goal = request.POST['goal']
+	if 'end_date' in request.POST:
+		end_date = request.POST['end_date']
 	hashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	ahashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	event = Event(hashString=hashS,adminHashString=ahashS,name=name,
-										admin=admin,total=total,goal=goal, desc=desc)
+										admin=admin,total=total,goal=goal, desc=desc, date=end_date,email=email)
 	event.save()
 	print event
 	# Send email to admin
@@ -71,6 +77,36 @@ def create_event(request):
 	context['errors'] = error
 	return render(request,'app/create_event.html', context)
 
+def admin_event(request, event_id):
+	context = {}
+	try:
+		event = Event.objects.get(adminHashString = event_id)
+	except:
+		return render(request, 'app/404.html')
+	context['hashString'] = event_id
+	context['name'] = event.name
+	context['admin'] = event.admin
+	context['email'] = event.email
+	if event.desc != None:
+		context['desc'] = event.desc
+	if event.goal != None:
+		context['goal'] = event.goal
+	if event.date != None:
+		context['date'] = event.date
+		
+	return render(request, 'app/admin.html', context)
+
+def edit_event(request):
+	try:
+		event = Event.objects.get(hashString = event_id)
+	except:
+		return render(request, 'app/404.html')
+
+
+
+	context = {}
+
+	return render(request, )
 
 def display_event(request, event_id):
 	
@@ -78,15 +114,19 @@ def display_event(request, event_id):
 		event = Event.objects.get(hashString = event_id)
 	except:
 		return render(request, 'app/404.html')
+
 	context = {}
 	context['name'] = event.name
 	context['admin'] = event.admin
 	context['total'] = event.total
-	context['desc'] = event.desc
-
+	if event.date != None:
+		context['end_date'] = event.date
+	if event.desc != None:
+		context['desc'] = event.desc
+	context['payments'] = len(event.contributor_set.all())
 	print event
 	if event.goal > 0:
-		context['goal'] = goal
+		context['goal'] = event.goal
 	people = []
 	if len(event.contributor_set.all()) > 0:
 		for c in event.contributor_set.all():

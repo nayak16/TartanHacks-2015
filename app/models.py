@@ -14,7 +14,9 @@ class Event(models.Model):
 	total = models.DecimalField(max_digits = 6, decimal_places = 2)
 	desc = models.TextField(null=True)
 	goal = models.IntegerField()
-
+	date = models.DateField()
+	email = models.EmailField()
+	
 	def __unicode__(self):
 		return self.hashString+" "+self.name
 
