@@ -26,8 +26,11 @@ def home(request):
         })
     )
 
+def new_event(request):
+
+	return render(request,'app/create_event.html')
+
 def create_event(request):
-	print "fewfewewfew"
 	context = {}
 	error = []
 	name = ""
@@ -46,7 +49,6 @@ def create_event(request):
 										admin=admin,total=total,goal=goal)
 	event.save()
 
-
 	# Send email to admin
 	try:
 		server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -63,6 +65,23 @@ def create_event(request):
 	context['errors'] = error
 	return render(request,TODO_CHANGE_THIS, context)
 
+
+def display_event(request, event_id):
+	print "------------"
+	try:
+		event = Event.objects.get(hashString = event_id)
+	except:
+		return render(request, 'app/404.html')
+	context = {}
+	context['name'] = event.name
+	context['admin'] = event.admin
+	context['total'] = event.total
+	people = []
+	for c in context.contributor_set.all():
+		people.append({'name':c.name,'amount':c.money})
+	context['people'] = people
+
+	return render(request, TODO_CHANGE_THIS, context)
 
 def contact(request):
     """Renders the contact page."""
