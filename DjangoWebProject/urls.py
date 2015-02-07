@@ -14,9 +14,10 @@ from app.forms import BootstrapAuthenticationForm
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'app.views.home', name='home'),
+    url(r'^index.html', 'app.views.home', name='home'),
     url(r'^new_event', 'app.views.new_event'),
     url(r'^create_event', 'app.views.create_event'),
-    url(r'^event/(?P<event_id>\s+)$', 'app.views.display_event'),
+    url(r'^event/(?P<event_id>\w+)', 'app.views.display_event'),
     url(r'^contact$', 'app.views.contact', name='contact'),
     url(r'^about', 'app.views.about', name='about'),
     url(r'^login/$',
