@@ -12,6 +12,7 @@ import hashlib
 import random
 import sys
 import smtplib
+import httplib
 
 def home(request):
     """Renders the home page."""
@@ -29,6 +30,33 @@ def home(request):
 def new_event(request):
 
 	return render(request,'app/create_event.html')
+
+def redirect(request):
+	return render(request,'app/event_page.html')
+
+def log_venmo(request):
+	context = {}
+	url = request.POST['url']
+	event_id = request.POST['event_id']
+	tok = request.POST['access_token']	
+	user_id = request.POST['user_id']
+	amount = request.POST['amount']
+	payer = request.POST['payer']
+	
+	venmo = httplib.HTTPConnection(url, 80)
+	venmo.connect()
+	venmo.request('POST', '/', 'access_token=%s&user_id=%s&amount=%s' % (tok,user_id, amount))
+	venmo.close()
+
+	try:
+		event = Event.objects.get(hashString = event_id)
+	except:
+		return render(request, 'app/404.html')
+	event.total+=int(amount)
+	event.contributor_set.create(name=payer, money=int(amount))
+
+
+	return render(request, 'app/index.html')
 
 def create_event(request):
 	print " created------"
