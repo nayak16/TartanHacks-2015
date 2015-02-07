@@ -16,20 +16,21 @@
   		<div class="title_text">Create a new event</div>
       <form action="/create_event" method="POST">
         {% csrf_token %} 
-        <div class="input_fieldname">Name of event*</div><input type="text" name="name" size="50" placeholder="Beach BBQ" required><br>
-        <div class="error_msg" id="error_event_name"></div>
-        <div class="input_fieldname">Venmo ID*</div><input type="text" name="admin" size="50" placeholder="0123456789012345678" required><br>
-        <div class="error_msg" id="error_venmo_id"></div>
-        <div class="input_fieldname">Email Address*</div><input type="email" name="email" size="50" placeholder="john_doe@example.com" required><br>
-        <div class="error_msg" id="error_venmo_id"></div>
-        <div class="input_fieldname">Recommended Amount</div><input type="text"  name="rec_amt" size="1"><br>
-        <div class="error_msg" id="error_rec_amount"></div>
-        <div class="input_fieldname">Goal</div><input type="text"  name="goal" size="50" placeholder="100"><br>
-        <div class="error_msg" id="error_goal"></div>
-        <div class="input_fieldname">End date</div><input type="date"  name="end_date" size="50" placeholder="YYYY-MM-DD"><br>
-        <div class="error_msg" id="error_end_date"></div>
-        <div class="input_fieldname">Description</div><textarea name="desc" cols="50" rows="5" style="margin-top:2px;"></textarea><br>
-        <div class="error_msg" id="error_desc"></div>
+        <div class="input_fieldname">Name of event*</div><input type="text" id="input_name" name="name" size="50" placeholder="Beach BBQ" required>
+        <div class="error_msg" id="error_event_name"></div><br>
+        <div class="input_fieldname">Venmo ID*</div>
+        <input type="text" id="input_id" name="admin" size="50" maxlength="19" placeholder="0123456789012345678" required>
+        <div class="error_msg" id="error_venmo_id"></div><br>
+        <div class="input_fieldname">Email Address*</div><input type="email"id="input_email" name="email" size="50" placeholder="john_doe@example.com" required>
+        <div class="error_msg" id="error_email"></div><br>
+        <div class="input_fieldname">Recommended Amount</div><input type="text" id="input_rec_amt" name="rec_amt" size="1">
+        <div class="error_msg" id="error_rec_amount"></div><br>
+        <div class="input_fieldname">Goal</div><input type="text" id="input_goal" name="goal" size="50" placeholder="100">
+        <div class="error_msg" id="error_goal"></div><br>
+        <div class="input_fieldname">End date</div><input type="date" id="input_date" name="end_date" size="50" placeholder="YYYY-MM-DD">
+        <div class="error_msg" id="error_end_date"></div><br>
+        <div class="input_fieldname">Description</div><textarea name="desc" id="input_desc" cols="50" rows="5" style="margin-top:2px;"></textarea>
+        <div class="error_msg" id="error_desc"></div><br>
         <div class="submit_form"><input type="submit" value="CREATE"></input></div>
       </form>
       {% if confirm %}

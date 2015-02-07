@@ -3,8 +3,6 @@ input,textarea {
 }
 
 input[type=submit] {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
   border-radius: 0px;
   font-size: 16px;
   font-family: 'Open Sans Condensed' sans-serif;
@@ -26,6 +24,17 @@ html, body {
 	background-color: #ECF0F1;
 }
 
+.error_msg{
+	margin-left:12px;
+	display:inline-block;
+	color:red;
+}
+
+form input{
+	display:inline-block;
+}
+
+
 a:link {
     color: inherit; /* blue colors for links too */
   	text-decoration: inherit; /* no underline */
@@ -42,6 +51,7 @@ a:link {
 	color:#68C3A3;
 	font-size:18px;
 	font-weight:300;
+	margin-left: 48px;
 }
 
 .nav{
