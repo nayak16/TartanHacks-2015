@@ -6,7 +6,9 @@ input[type=submit] {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0px;
-  font-family: Arial;
+  font-size: 16px;
+  font-family: 'Open Sans Condensed' sans-serif;
+  font-weight: 600;
   color: white;
   font-size: 16px;
   background: #26A65B;
@@ -134,8 +136,10 @@ a:link {
 	height:200px;
 }
 .submit_form{
+
 	float:right;
-	margin-right:250px;
+	margin-right:252px;
+	margin-top: 12px;
 }
 
 .big_text{
