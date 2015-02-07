@@ -24,8 +24,4 @@ $(document).ready(function(){
 	        window.location.hash = target;
 	    });
 	});
-
-	$('#scroll_to').on('click',function(){
-		console.log("here");
-	});
 });
