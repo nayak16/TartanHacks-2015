@@ -9,7 +9,7 @@
   	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
   	<link rel="stylesheet" href="/static/app/css/font-awesome.min.css">
     <div class="nav">
-      <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.png"></a>
+      <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.svg"></a>
     </div>
   	<div class="main">
       <br>
@@ -37,7 +37,7 @@
         {% if date %}
         <input type="date"  name="end_date" size="50" value={{date}}><br>
         {% else %}
-        <input type="date"  name="end_date" size="50"><br>
+        <input type="date"  name="end_date" size="50" placeholder="YYYY-MM-DD"><br>
         {% endif %}
         <div class="error_msg" id="error_end_date"></div>
         <div class="input_fieldname">Description</div>
