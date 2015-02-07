@@ -4,7 +4,7 @@ input,textarea {
 
 html, body {
 	margin: 0px; padding: 0px; border: 0px;
-	font-family: 'Open-Sans' sans-serif;
+	font-family: 'Open Sans Condensed' sans-serif;
 	height:100%;
 	background-color: #ECF0F1;
 }
@@ -33,7 +33,7 @@ a:link {
 	display:inline-block;
 	font-size: 48px;
 	font-weight:700;
-	font-family: 'Open-Sans', sans-serif;
+	font-family: 'Open Sans Condensed', sans-serif;
 	background-color:#ECF0F1;
 	padding:24px;
 }
@@ -66,6 +66,16 @@ a:link {
 	letter-spacing: 2px;
 	color:white;
 }
+.see_less{
+	display:inline-block;
+	height:16px;
+	padding:16px;
+	background-color: #68C3A3;
+	font-size:16px;
+	font-weight:300;
+	letter-spacing: 2px;
+	color:white;
+}
 
 .main{
 	margin-left: auto;
@@ -89,7 +99,7 @@ a:link {
 
 .input_fieldname{
 	display:inline-block;
-	font-family: 'Open-Sans', sans-serif;
+	font-family: 'Open Sans Condensed', sans-serif;
 	font-weight:300;
 	font-size:18px;
 	margin-bottom:36px;
@@ -105,4 +115,9 @@ a:link {
 .submit_form{
 	float:right;
 	margin-right:260px;
+}
+
+#big_text{
+	font-size: 36px;
+	font-weight:300;
 }
