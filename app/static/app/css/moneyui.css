@@ -20,6 +20,13 @@ a:link {
 	padding:12px;
 }
 
+#success{
+	clear:both;
+	color:#68C3A3;
+	font-size:12px;
+	font-weight:300;
+}
+
 .nav{
 	padding:24px;
 	background-color: rgb(34,34,34);
