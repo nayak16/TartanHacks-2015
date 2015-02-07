@@ -51,8 +51,7 @@ $( document ).ready(function(){
 		check_input($( this ).val(),"#error_rec_amount","^[0-9]*$");
 	});
 	$('#input_date').change(function(){
-		console.log($( this ).val());
-		check_input($( this ).val(),"#error_end_date","^(19|20)\d\d([- /.])(0[1-9]|1[012])\2(0[1-9]|[12][0-9]|3[01])$");
+		check_input($( this ).val(),"#error_end_date","^[0-9]+\-+[0-9]+\-+[0-9]+$$");
 	});
 });
 
