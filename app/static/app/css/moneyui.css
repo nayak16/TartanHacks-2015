@@ -9,6 +9,12 @@ a:link {
   	text-decoration: inherit; /* no underline */
 }
 
+#logo{
+	margin:12px;
+	display:inline-block;
+	padding:12px;
+}
+
 .banner{
 	height:900px;
 	background-color: rgb(34,34,34);
@@ -29,11 +35,13 @@ a:link {
 	top: 200px;
 }
 #get_started{
+	margin-top:12px;
 	font-size: 16px;
 	font-weight: 600;
-	padding:12px;
-	width:200px;
-	background-color:white;
+	padding:12px 24px 12px 24px;
+	display: inline-block;
+	background-color:#26A65B;
+	color:white;
 }
 
 .see_more{
