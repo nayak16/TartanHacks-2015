@@ -31,7 +31,9 @@ def new_event(request):
 	return render(request,'app/create_event.html')
 
 def redirect(request):
-	return render(request,'app/event_page.html')
+	context = {}
+	context['hash'] = request.POST['hash']
+	return render(request,'app/event_page.html',context)
 
 
 
@@ -42,17 +44,21 @@ def log_venmo(request):
 	amount = request.POST['amount']
 	payer = request.POST['payer']
 	
-	event_id = request.COOKIES.get('id')
+	print request.POST
+	event_id = request.POST['event_id']
 	try:
 		event = Event.objects.get(hashString = event_id)
 	except:
 		return render(request, 'app/404.html')
 
 	user_id = event.admin 
+	print user_id
 
-	venmo = httplib.HTTPConnection(url, 80)
+	venmo = httplib.HTTPConnection("api.venmo.com", 80)
 	venmo.connect()
-	venmo.request('POST', '/', 'access_token=%s&user_id=%s&amount=%s' % (tok,user_id, amount))
+	venmo.request('POST', '/v1/payments', 'access_token=%s&user_id=%s&amount=%snote=moneyPLS' % (tok,user_id, amount))
+	print venmo.getresponse().read()
+	print venmo.getresponse().reason()
 	venmo.close()
 
 	
@@ -140,17 +146,17 @@ def edit_event(request):
 	return render(request, )
 
 def redirect_event(request):
-	print "----------------"
 	context = {}
-	event_id = request.COOKIES.get('id') 
 	context['loggedin'] = True
-	print event_id	
+	event_id = request.GET['state']
+	context['access_token'] = request.GET['access_token']
+	context['event_id'] = request.GET['state']
+
+	print request.COOKIES
 	try:
 		event = Event.objects.get(hashString = event_id)
 	except:
 		return render(request, 'app/404.html')
-
-	context = {}
 	context['name'] = event.name
 	context['admin'] = event.admin
 	context['total'] = event.total
@@ -168,7 +174,8 @@ def redirect_event(request):
 			people.append({'name':c.name,'amount':c.money})
 		context['people'] = people
 
-
+	print "========================"
+	print context
 	return render(request, "app/event.html", context)
 
 
@@ -183,6 +190,7 @@ def display_event(request, event_id):
 	context['name'] = event.name
 	context['admin'] = event.admin
 	context['total'] = event.total
+	context['hash'] = event.hashString
 	if event.date != None:
 		context['end_date'] = event.date
 	if event.desc != None:

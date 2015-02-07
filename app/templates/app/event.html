@@ -32,11 +32,9 @@
       	<div class="big_text">${{total}}</div> total raised 
         {% if goal %} out of ${{goal}}{% endif %} 
       	<br>
-      	<a href="/event_page.html">
-			    <div class="green_button">
+			    <button onclick="venmo()" class="green_button">
 				  PAY WITH VENMO
-			    </div>
-		    </a>
+			    </button>
       </div>
       
       <div id="event_footer">
@@ -48,8 +46,10 @@
   	  </div>
       {% if loggedin %}
       <form action = "/log_venmo" method = "POST">
+        {% csrf_token %}
+        <input type="hidden" name="event_id" value={{event_id}}>
         <input type = "hidden" name = "url" value = "https://api.venmo.com/v1/payments">
-        <input type = "hidden" name = "access_token" value = "" id="at">
+        <input type = "hidden" name = "access_token" value = {{access_token}} id="at">
         Your Name: <input name = "payer" value = ""> <br>
         Donation Amount: <input name = "amount" value = ""> <br>
         <button>Donate</button>
@@ -66,6 +66,26 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="/static/app/js/jquery.cookie.js"></script>
     <script>
+    $(document).ready(function(){
+      $.cookie.json = true;
+      var currentUser = $.cookie('user');
+      alert('User name is ' + currentUser.name);
+      var fullAccessToken = $(location).attr('search');
+      var truncAccessToken = fullAccessToken.substr(14);
+      alert("truncAccessToken: " + truncAccessToken);
+      $("#at").val(truncAccessToken);
+
+    });
+  </script>
+    <script>
+      function venmo(){
+        console.log("clicked");
+        var pathname = $(location).attr('pathname');
+        var hashID = pathname.substr(7);
+        window.location.replace(
+            "https://api.venmo.com/v1/oauth/authorize?client_id=2343&scope=make_payments&state="+hashID);
+      }
+
       var pathname = $(location).attr('pathname');
       var hashID = pathname.substr(7);
       $.cookie('id', hashID);
