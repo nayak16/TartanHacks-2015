@@ -34,6 +34,8 @@ a:link {
 
 .banner{
 	height:900px;
+	background-repeat:no-repeat;
+    background-size:cover;
 	background-color: rgb(34,34,34);
 }
 .banner_title{
