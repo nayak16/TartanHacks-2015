@@ -38,9 +38,6 @@ function check_input(input,error_id,regex){
 }
 
 $( document ).ready(function(){
-	$('#input_name').change(function(){
-		check_input($( this ).val(),"#error_event_name","^[a-zA-Z0-9_]*$");
-	});
 	$('#input_id').change(function(){
 		check_input($( this ).val(),"#error_venmo_id","^[0-9]*$");
 	});
