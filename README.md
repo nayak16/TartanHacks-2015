@@ -1,7 +1,7 @@
 CMU TartanHacks 2015 : MoneyPLS
 ========
 
-####moneypls.azurewebsites.net
+####[moneypls.azurewebsites.net](moneypls.azurewebsites.net)
 
 MoneyPLS is an open source web application which makes event donations through Venmo as easy to track as they are to make.
 
