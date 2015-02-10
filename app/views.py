@@ -55,8 +55,7 @@ def log_venmo(request):
 	user_id = event.admin 
 	print user_id
 
-	requests.post('https://api.venmo.com/v1/payments',params={'access_token':tok,'phone':'1'+user_id,'amount':amount,'note':'moneypls payment'})
-	#subprocess.call(['curl', 'https://api.venmo.com/v1/payments', '-d', "access_token="+tok,'-d',"phone=1"+user_id,"-d","amount="+amount,"-d","note=moneypls payment"])
+	subprocess.call(['curl', 'https://api.venmo.com/v1/payments', '-d', "access_token="+tok,'-d',"phone=1"+user_id,"-d","amount="+amount,"-d","note=moneypls payment"])
 	
 	event.total= str(float(event.total) + float(amount))
 	event.contributor_set.create(name=payer, money=float(amount))
