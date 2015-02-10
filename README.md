@@ -9,6 +9,10 @@ Technology
 ------------------------------
 Payments are powered by Venmo; Application deployed with Microsoft Azure.
 
+Recognition
+-----------------------------
+Best Use of Azure Cloud Services (Microsoft Sponsor Prize)
+
 Team
 -----------------------------
 ```
