@@ -41,6 +41,7 @@ a:link {
 #event_footer{
 	clear:both;
 }
+
 #event_title{
 	font-size:24px;
 	font-weight: 700
@@ -48,6 +49,11 @@ a:link {
 
 .big_text{
 	font-size: 36px;
+	font-weight:300;
+}
+
+.med_text{
+	font-size:18px;
 	font-weight:300;
 }
 
