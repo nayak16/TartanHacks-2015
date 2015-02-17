@@ -6,7 +6,7 @@
     <link rel="icon" href="/static/app/content/favicon.ico" type="image/x-icon"/>
   </head>
   <body>
-  	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
   	<link rel="stylesheet" href="/static/app/css/font-awesome.min.css">
     <div class="nav">
       <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.svg"></a>
@@ -16,6 +16,8 @@
   		<div class="title_text">Create a new event</div>
       <form action="/create_event" method="POST">
         {% csrf_token %} 
+        <div class="input_fieldname">Your Name/Organization*</div><input type="text" id="input_name" name="organizer" size="50" placeholder="John Doe" required>
+        <div class="error_msg" id="error_event_name"></div><br>
         <div class="input_fieldname">Name of event*</div><input type="text" id="input_name" name="name" size="50" placeholder="Beach BBQ" required>
         <div class="error_msg" id="error_event_name"></div><br>
         <div class="input_fieldname">Phone Number*</div>
@@ -23,7 +25,7 @@
         <div class="error_msg" id="error_venmo_id"></div><br>
         <div class="input_fieldname">Email Address*</div><input type="email"id="input_email" name="email" size="50" placeholder="john_doe@example.com" required>
         <div class="error_msg" id="error_email"></div><br>
-        <div class="input_fieldname">Recommended Amount</div><input type="text" id="input_rec_amt" name="rec_amt" size="1">
+        <div class="input_fieldname">Recommended Amount*</div><input type="text" id="input_rec_amt" name="rec_amt" size="1" required>
         <div class="error_msg" id="error_rec_amount"></div><br>
         <div class="input_fieldname">Goal</div><input type="text" id="input_goal" name="goal" size="50" placeholder="100">
         <div class="error_msg" id="error_goal"></div><br>

@@ -6,18 +6,18 @@
     <link rel="icon" href="/static/app/content/favicon.ico" type="image/x-icon"/>
   </head>
   <body>
-  	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
+  	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
   	<link rel="stylesheet" href="/static/app/css/font-awesome.min.css">
     <div class="nav">
       <a href="/index.html"><img border="0" src="/static/app/content/grey_logo.svg"></a>
     </div>
   	<div class="main">
-    {% if admin %}
+    
 	  <div id="event_header">
-	    An event by {{admin}}
+	    An event by {{organizer}}
 	    <div id="event_title"> {{name}} </div>
 	  </div>
-    {% endif %}
+   
       <div class="left_divider">
       	<img src="/static/app/content/foo.jpg" width="456px"></img>
         {% if desc %}

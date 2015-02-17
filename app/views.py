@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
+from django.db.models import F
 from app.models import *
 
 import hashlib
@@ -58,8 +59,9 @@ def log_venmo(request):
 	requests.post('https://api.venmo.com/v1/payments',params={'access_token':tok,'phone':'1'+user_id,'amount':amount,'note':'moneypls payment'})
 	#subprocess.call(['curl', 'https://api.venmo.com/v1/payments', '-d', "access_token="+tok,'-d',"phone=1"+user_id,"-d","amount="+amount,"-d","note=moneypls payment"])
 	
-	event.total= str(float(event.total) + float(amount))
+	event.total= F('total') + float(amount)
 	event.contributor_set.create(name=payer, money=float(amount))
+	event.save()
 
 
 	return render(request, 'app/index.html')
@@ -67,15 +69,18 @@ def log_venmo(request):
 def create_event(request):
 	context = {}
 	error = []
+	organizer = ""
 	name = ""
 	admin = ""
-	desc = None
+	desc = ""
 	goal = 0
 	total = 0
 	end_date = None
-	email = None
+	email = ""
 	if 'name' in request.POST:
 		name = request.POST['name']
+	if 'organizer' in request.POST:
+		organizer = request.POST['organizer']
 	if 'admin' in request.POST:
 		admin = request.POST['admin']
 	if 'email' in request.POST:
@@ -84,12 +89,14 @@ def create_event(request):
 		desc = request.POST['desc']
 	if 'goal' in request.POST:
 		goal = request.POST['goal']
+		if(goal == ''):
+			goal = 0
 	if 'end_date' in request.POST:
 		end_date = request.POST['end_date']
 	hashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	ahashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
-	event = Event(hashString=hashS,adminHashString=ahashS,name=name,
-										admin=admin,total=total,goal=goal, desc=desc, date=end_date,email=email)
+	event = Event(hashString=hashS,adminHashString=ahashS,name=name,organizer=organizer,
+					admin=admin,total=total,goal=goal, desc=desc, date=end_date,email=email)
 	event.save()
 	print event
 	# Send email to admin
@@ -188,6 +195,9 @@ def display_event(request, event_id):
 	context['name'] = event.name
 	context['admin'] = event.admin
 	context['total'] = event.total
+	context['organizer'] = event.organizer
+	print "THIS"
+	print event.organizer
 	context['hash'] = event.hashString
 	if event.date != None:
 		context['end_date'] = event.date
