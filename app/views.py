@@ -2,7 +2,7 @@
 Definition of views.
 """
 
-from django.shortcuts import render
+from django.shortcuts import *
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
@@ -32,7 +32,7 @@ def home(request):
 def new_event(request):
 	return render(request,'app/create_event.html')
 
-def redirect(request):
+def redirectBack(request):
 	context = {}
 	context['hash'] = request.POST['hash']
 	return render(request,'app/event_page.html',context)
@@ -64,7 +64,11 @@ def log_venmo(request):
 	event.save()
 
 
-	return render(request, 'app/index.html')
+	return redirect('/confirmation')
+
+def confirm(request):
+
+	return render(request, 'app/confirmation.html')
 
 def create_event(request):
 	context = {}
