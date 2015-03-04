@@ -8,6 +8,7 @@ from django.template import RequestContext
 from datetime import datetime
 from django.db.models import F
 from app.models import *
+from oauth2client.client import OAuth2WebServerFlow
 
 import hashlib
 import random
@@ -15,7 +16,9 @@ import sys
 import smtplib
 import httplib
 import requests
+import gspread
 
+flow = None
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -30,13 +33,26 @@ def home(request):
     )
 
 def new_event(request):
-	return render(request,'app/create_event.html')
+	context = {}
+	print request.GET
+	
+	if 'code' in request.GET:
+		context['google_code'] = request.GET['code']
+		print context['google_code']
+	else:
+		flow = OAuth2WebServerFlow(client_id='694845363032-kveu1luritpv04d3lqn8uploof0hd6pn.apps.googleusercontent.com',
+                           client_secret='zV6r2kjZQdZOw5LHNvhoQRFq',
+                           scope='https://spreadsheets.google.com/feeds',
+                           redirect_uri='https://www.moneypls.azurewebsites.net/new_event.html')
+		print flow
+		uri = flow.step1_get_authorize_url()
+		context['google_link'] = uri
+	return render(request,'app/create_event.html',context)
 
 def redirectBack(request):
 	context = {}
 	context['hash'] = request.POST['hash']
 	return render(request,'app/event_page.html',context)
-
 
 
 def log_venmo(request):
@@ -56,7 +72,7 @@ def log_venmo(request):
 	user_id = event.admin 
 	print user_id
 
-	requests.post('https://api.venmo.com/v1/payments',params={'access_token':tok,'phone':'1'+user_id,'amount':amount,'note':'moneypls payment'})
+	requests.post('https://api.venmo.com/v1/payments',params={'access_token':tok,'phone':'1'+user_id,'amount':amount,'note':'MoneyPLS Payment for '+event.name})
 	#subprocess.call(['curl', 'https://api.venmo.com/v1/payments', '-d', "access_token="+tok,'-d',"phone=1"+user_id,"-d","amount="+amount,"-d","note=moneypls payment"])
 	
 	event.total= F('total') + float(amount)
@@ -72,6 +88,8 @@ def confirm(request):
 
 def create_event(request):
 	context = {}
+	print flow
+
 	error = []
 	organizer = ""
 	name = ""
@@ -102,7 +120,6 @@ def create_event(request):
 	event = Event(hashString=hashS,adminHashString=ahashS,name=name,organizer=organizer,
 					admin=admin,total=total,goal=goal, desc=desc, date=end_date,email=email)
 	event.save()
-	print event
 	# Send email to admin
 	try:
 		server = smtplib.SMTP('smtp.gmail.com', 587)
@@ -119,7 +136,13 @@ def create_event(request):
 
 	context['confirm'] = "Success! Check your email for a link to the admin page for the event"
 	context['errors'] = error
+
+
 	return render(request,'app/create_event.html', context)
+
+def google(request):
+	context = {}
+
 
 def admin_event(request, event_id):
 	context = {}

@@ -15,7 +15,9 @@
       <br>
   		<div class="title_text">Create a new event</div>
       <form action="/create_event" method="POST">
-        {% csrf_token %} 
+        {% csrf_token %}
+        <input type="hidden" name="google_code" value={{google_code}}>
+
         <div class="input_fieldname">Your Name/Organization*</div><input type="text" id="input_name" name="organizer" size="50" placeholder="John Doe" required>
         <div class="error_msg" id="error_event_name"></div><br>
         <div class="input_fieldname">Name of event*</div><input type="text" id="input_name" name="name" size="50" placeholder="Beach BBQ" required>
@@ -35,6 +37,9 @@
         <div class="error_msg" id="error_desc"></div><br>
         <div class="submit_form"><input type="submit" value="CREATE"></input></div>
       </form>
+      {% if google_link %}
+      <a href={{google_link}} class="google"><button>Sign In to Google</button></a>
+      {% endif %}
       {% if confirm %}
       <div id="success">{{confirm}}</div>
       {% endif %}
