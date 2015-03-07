@@ -10,6 +10,14 @@
   <body>
   	<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700' rel='stylesheet' type='text/css'>
   	<link rel="stylesheet" href="/static/app/css/font-awesome.min.css">
+    <script type="text/javascript">
+      function signinCallback(authResult) {
+        console.log(authResult);
+        document.cookie="code="+authResult['code'];
+       
+      }
+    </script>
+
   	<div class="banner" id="top">
   		<div id="logo">
 	  		<a href="/index.html">
@@ -33,11 +41,25 @@
   			</center>
   			<br>
   			<center>
-  				<a href="/new_event.html">
+           <span id="googleSignInButton" class="animated fadeInUp green_button">
+                <span
+                  class="g-signin"
+                  data-width="widie"
+                  data-height="tall"
+                  data-theme="light"
+                  data-accesstype="offline"
+                  data-callback="signinCallback"
+                  data-approvalprompt="force"
+                  data-clientid="694845363032-kveu1luritpv04d3lqn8uploof0hd6pn.apps.googleusercontent.com"
+                  data-cookiepolicy="single_host_origin"
+                  data-scope="https://spreadsheets.google.com/feeds">
+                </span>
+              </span>
+  				<!-- <a href="/new_event.html">
 		  			<div class="green_button">
 		  				CREATE NEW EVENT
 		  			</div>
-	  			</a>
+	  			</a> -->
   			</center>
   		</div>
   	</div>
