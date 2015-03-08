@@ -1,3 +1,7 @@
 django
+oauth2client
 requests
 gunicorn
+hashlib
+gspread
+smtplib
