@@ -125,7 +125,7 @@ def create_event(request):
 		server = smtplib.SMTP('smtp.gmail.com', 587)
 		server.starttls()
 		server.login("moneyplscmu@gmail.com", "gucciswerve")
-		msg = "Event Page: http://moneypls.azurewebsites.net/event/"+hashS+"\n\nAdmin Page: http://moneypls.azurewebsites.net/admin/"+ahashS
+		msg = "Event Page: http://moneypls.herokuapp.com/event/"+hashS+"\n\nAdmin Page: http://moneypls.herokuapp.com/admin/"+ahashS
 		subject = "Event Confirmation for "+name
 		message = 'Subject: %s\n\n%s' % (subject, msg)
 		server.sendmail("moneyplscmu@gmail.com", email, message)
