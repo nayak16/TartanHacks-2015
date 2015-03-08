@@ -8,7 +8,7 @@ from django.template import RequestContext
 from datetime import datetime
 from django.db.models import F
 from app.models import *
-from oauth2client.client import OAuth2WebServerFlow
+import oauth2client
 
 import hashlib
 import random
