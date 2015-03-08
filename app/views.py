@@ -8,7 +8,6 @@ from django.template import RequestContext
 from datetime import datetime
 from django.db.models import F
 from app.models import *
-import oauth2client
 
 import hashlib
 import random
@@ -88,7 +87,6 @@ def confirm(request):
 
 def create_event(request):
 	context = {}
-	print flow
 
 	error = []
 	organizer = ""
