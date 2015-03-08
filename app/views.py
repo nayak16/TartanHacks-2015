@@ -15,7 +15,6 @@ import sys
 import smtplib
 import httplib
 import requests
-import gspread
 
 flow = None
 def home(request):
