@@ -1,6 +1,5 @@
 django
-oauth2client
 requests
 gunicorn
-gspread
+oauth2client
 smtplib
