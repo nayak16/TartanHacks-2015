@@ -3,3 +3,4 @@ requests
 gunicorn
 oauth2client
 smtplib
+whitenoise
