@@ -14,7 +14,7 @@
       function signinCallback(authResult) {
         console.log(authResult);
         document.cookie="code="+authResult['code'];
-        url = window.location.host+"/new_event";
+        url = "/new_event";
         console.log(url);
         window.location.replace(url);
        
