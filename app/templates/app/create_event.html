@@ -16,7 +16,7 @@
   		<div class="title_text">Create a new event</div>
       <form action="/create_event" method="POST">
         {% csrf_token %}
-        <input type="hidden" name="google_code" value={{google_code}}>
+        <input type="hidden" name="code" value={{code}}>
 
         <div class="input_fieldname">Your Name/Organization*</div><input type="text" id="input_name" name="organizer" size="50" placeholder="John Doe" required>
         <div class="error_msg" id="error_event_name"></div><br>

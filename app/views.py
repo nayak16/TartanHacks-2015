@@ -9,14 +9,17 @@ from datetime import datetime
 from django.db.models import F
 from app.models import *
 
+import os
 import hashlib
 import random
 import sys
 import smtplib
 import httplib
 import requests
+import oauth2client
+from oauth2client.client import flow_from_clientsecrets
 
-flow = None
+
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -32,19 +35,12 @@ def home(request):
 
 def new_event(request):
 	context = {}
-	print request.GET
+	print request.COOKIES
 	
-	if 'code' in request.GET:
-		context['google_code'] = request.GET['code']
-		print context['google_code']
-	else:
-		flow = OAuth2WebServerFlow(client_id='694845363032-kveu1luritpv04d3lqn8uploof0hd6pn.apps.googleusercontent.com',
-                           client_secret='zV6r2kjZQdZOw5LHNvhoQRFq',
-                           scope='https://spreadsheets.google.com/feeds',
-                           redirect_uri='https://www.moneypls.azurewebsites.net/new_event.html')
-		print flow
-		uri = flow.step1_get_authorize_url()
-		context['google_link'] = uri
+	if 'code' in request.COOKIES:
+		context['code'] = request.COOKIES['code']
+		print context['code']
+	
 	return render(request,'app/create_event.html',context)
 
 def redirectBack(request):
@@ -87,6 +83,7 @@ def confirm(request):
 def create_event(request):
 	context = {}
 
+	code = ""
 	error = []
 	organizer = ""
 	name = ""
@@ -114,6 +111,21 @@ def create_event(request):
 		end_date = request.POST['end_date']
 	hashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	ahashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
+
+	if 'code' in request.POST:
+		code = request.POST['code']
+		print "GOOGLE CODE: "+code
+		SECRETS = os.path.join(os.path.dirname(__file__), 'client_secrets.json')
+		flow = flow_from_clientsecrets(SECRETS,
+                               scope='https://www.googleapis.com/auth/calendar',
+                               redirect_uri='postmessage')
+		credentials = flow.step2_exchange(code)
+		print "CREDENTIALS: "+str(credentials)
+
+
+
+
+
 	event = Event(hashString=hashS,adminHashString=ahashS,name=name,organizer=organizer,
 					admin=admin,total=total,goal=goal, desc=desc, date=end_date,email=email)
 	event.save()
@@ -136,10 +148,6 @@ def create_event(request):
 
 
 	return render(request,'app/create_event.html', context)
-
-def google(request):
-	context = {}
-
 
 def admin_event(request, event_id):
 	context = {}
