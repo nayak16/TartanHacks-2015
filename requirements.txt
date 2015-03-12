@@ -3,3 +3,7 @@ requests
 gunicorn
 oauth2client
 whitenoise
+gspread
+apiclient
+google-api-python-client
+httplib2

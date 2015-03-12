@@ -3,6 +3,8 @@ Definition of models.
 """
 
 from django.db import models
+from oauth2client.django_orm import CredentialsField
+
 
 # Create your models here.
 
@@ -17,6 +19,9 @@ class Event(models.Model):
 	goal = models.IntegerField()
 	date = models.DateField()
 	email = models.EmailField()
+	spread = models.CharField(max_length = 200)
+  	cred = CredentialsField()
+
 	
 	def __unicode__(self):
 		return self.hashString+" "+self.name

@@ -9,6 +9,13 @@ from datetime import datetime
 from django.db.models import F
 from app.models import *
 
+# For retreiving email
+import apiclient
+from apiclient.discovery import build
+from apiclient import errors
+import httplib2
+import logging
+
 import os
 import hashlib
 import random
@@ -17,6 +24,7 @@ import smtplib
 import httplib
 import requests
 import oauth2client
+import gspread
 from oauth2client.client import flow_from_clientsecrets
 
 
@@ -63,15 +71,30 @@ def log_venmo(request):
 	except:
 		return render(request, 'app/404.html')
 
+
 	user_id = event.admin 
-	print user_id
 
 	requests.post('https://api.venmo.com/v1/payments',params={'access_token':tok,'phone':'1'+user_id,'amount':amount,'note':'MoneyPLS Payment for '+event.name})
 	#subprocess.call(['curl', 'https://api.venmo.com/v1/payments', '-d', "access_token="+tok,'-d',"phone=1"+user_id,"-d","amount="+amount,"-d","note=moneypls payment"])
 	
 	event.total= F('total') + float(amount)
 	event.contributor_set.create(name=payer, money=float(amount))
+	gc = gspread.authorize(event.cred)
 	event.save()
+
+# Open a worksheet from spreadsheet with one shot
+	sh = gc.open_by_url(event.spread).sheet1
+	if len(event.contributor_set.all()) > 0:
+		i = 1
+		sh.update_acell('A1', 'Person')
+		sh.update_acell('B1', 'Money Contributed ($)')
+		for c in event.contributor_set.all():
+			i+=1
+			sh.update_acell('A'+str(i), c.name)
+			sh.update_acell('B'+str(i), c.money)
+
+			
+
 
 
 	return redirect('/confirmation')
@@ -79,6 +102,26 @@ def log_venmo(request):
 def confirm(request):
 
 	return render(request, 'app/confirmation.html')
+
+def get_user_info(credentials):
+  """Send a request to the UserInfo API to retrieve the user's information.
+
+  Args:
+    credentials: oauth2client.client.OAuth2Credentials instance to authorize the
+                 request.
+  Returns:
+    User information as a dict.
+  """
+  user_info_service = build(
+      serviceName='oauth2', version='v2',
+      http=credentials.authorize(httplib2.Http()))
+  user_info = None
+  try:
+    user_info = user_info_service.userinfo().get().execute()
+  except errors.HttpError, e:
+    logging.error('An error occurred: %s', e)
+  if user_info and user_info.get('id'):
+    return user_info
 
 def create_event(request):
 	context = {}
@@ -92,6 +135,7 @@ def create_event(request):
 	goal = 0
 	total = 0
 	end_date = None
+	spread = ""
 	email = ""
 	if 'name' in request.POST:
 		name = request.POST['name']
@@ -99,10 +143,10 @@ def create_event(request):
 		organizer = request.POST['organizer']
 	if 'admin' in request.POST:
 		admin = request.POST['admin']
-	if 'email' in request.POST:
-		email = request.POST['email']
 	if 'desc' in request.POST:
 		desc = request.POST['desc']
+	if 'spread' in request.POST:
+		spread = request.POST['spread']
 	if 'goal' in request.POST:
 		goal = request.POST['goal']
 		if(goal == ''):
@@ -112,22 +156,28 @@ def create_event(request):
 	hashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 	ahashS = hashlib.md5(admin + name + str(random.randint(0,sys.maxint))).hexdigest()
 
+
+
+	cred = None
 	if 'code' in request.POST:
 		code = request.POST['code']
 		print "GOOGLE CODE: "+code
 		SECRETS = os.path.join(os.path.dirname(__file__), 'client_secrets.json')
-		flow = flow_from_clientsecrets(SECRETS,
-                               scope='https://www.googleapis.com/auth/calendar',
-                               redirect_uri='postmessage')
-		credentials = flow.step2_exchange(code)
-		print "CREDENTIALS: "+str(credentials)
+		SCOPES = [
+   				'email',
+    			'https://www.googleapis.com/auth/calendar',
+				]
+		flow = flow_from_clientsecrets(SECRETS, ' '.join(SCOPES))
+		flow.redirect_uri = 'postmessage'
+		cred = flow.step2_exchange(code)
+
+		info = get_user_info(cred)
+		email = info['email']
 
 
 
-
-
-	event = Event(hashString=hashS,adminHashString=ahashS,name=name,organizer=organizer,
-					admin=admin,total=total,goal=goal, desc=desc, date=end_date,email=email)
+	event = Event(hashString=hashS,adminHashString=ahashS,name=name,organizer=organizer,spread=spread,
+					admin=admin,total=total,goal=goal, desc=desc, date=end_date,email=email, cred=cred)
 	event.save()
 	# Send email to admin
 	try:
@@ -210,9 +260,6 @@ def redirect_event(request):
 		context['goal'] = event.goal
 	people = []
 	
-
-	print "========================"
-	print context
 	return render(request, "app/event.html", context)
 
 
