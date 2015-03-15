@@ -127,7 +127,7 @@ def create_event(request):
 	context = {}
 
 	code = ""
-	error = []
+	
 	organizer = ""
 	name = ""
 	admin = ""
@@ -166,13 +166,15 @@ def create_event(request):
 		SCOPES = [
    				'email',
     			'https://www.googleapis.com/auth/calendar',
+    			'https://www.googleapis.com/auth/userinfo.profile',
 				]
 		flow = flow_from_clientsecrets(SECRETS, ' '.join(SCOPES))
 		flow.redirect_uri = 'postmessage'
 		cred = flow.step2_exchange(code)
 
 		info = get_user_info(cred)
-		email = info['email']
+		print info
+		email = request.POST['email']
 
 
 
@@ -190,12 +192,10 @@ def create_event(request):
 		server.sendmail("moneyplscmu@gmail.com", email, message)
 		server.quit()
 	except:
-		error.append("Oops something went wrong")
+		return render(request,'app/wrong.html', context)
 
 
-	context['confirm'] = "Success! Check your email for a link to the admin page for the event"
-	context['errors'] = error
-
+	context['confirm'] = "Success! Check "+email+" for a link to the page for the event"
 
 	return render(request,'app/create_event.html', context)
 
